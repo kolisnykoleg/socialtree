@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.title, {'attr': {'class': 'form-control mb-3'}}) }}
+
+    {{ form_row(form.url, {'attr': {'class': 'form-control mb-3'}}) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
