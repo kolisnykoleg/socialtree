@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ username }} {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="position-absolute">
+            <h1 class="d-block mt-3">@{{ username }}</h1>
+        </div>
+        <div class="row align-items-center justify-content-center vh-100">
+            <div class="col">
+                <div class="list-group">
+                    {% for link in links %}
+                        <a href="{{ link.url }}" target="_blank" class="list-group-item list-group-item-action text-center">{{ link.title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -21,13 +21,15 @@ class LinkController extends AbstractController
      */
     public function index(LinkRepository $linkRepository): Response
     {
-        $links = $this
-            ->getUser()
-            ->getLinks();
+        $user = $this->getUser();
+
+        $username = $user->getUsername();
+        $links = $user->getLinks();
 
         return $this->render(
             'link/index.html.twig',
             [
+                'username' => $username,
                 'links' => $links,
             ]
         );
@@ -67,7 +69,7 @@ class LinkController extends AbstractController
     public function edit(Request $request, Link $link): Response
     {
         if (!$this->checkUser($link)) {
-            return new Response('Forbidden', 403);
+            return new Response('Forbidden', Response::HTTP_FORBIDDEN);
         }
 
         $form = $this->createForm(LinkType::class, $link);
