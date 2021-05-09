@@ -10,11 +10,14 @@
                 <a class="btn btn-primary float-end" href="{{ path('logout') }}">Logout</a>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-4">
             <div class="col">
                 <links-list v-bind:init-links="{{ links_json }}"></links-list>
                 <a href="{{ path('link_new') }}">Create new</a>
             </div>
         </div>
+        <settings v-bind:init-settings="{{ settings|json_encode }}"></settings>
     </div>
+
+    <style>{{ settings['style'] }}</style>
 {% endblock %}

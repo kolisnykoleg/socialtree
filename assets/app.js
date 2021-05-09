@@ -13,10 +13,12 @@ import 'bootstrap'
 import Vue from 'vue'
 
 import LinksList from './components/LinksList'
+import Settings from './components/Settings'
 
 new Vue({
   el: '#app',
   components: {
     LinksList,
+    Settings,
   },
 })

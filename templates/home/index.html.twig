@@ -4,8 +4,9 @@
 
 {% block body %}
     <div class="container">
-        <div class="position-absolute">
-            <h1 class="d-block mt-3">@{{ username }}</h1>
+        <div class="d-flex align-items-center mt-3">
+            <img class="icon" src="{{ settings['icon_url'] }}" alt="">
+            <h2 class="d-inline-block m-0">{{ username }}</h2>
         </div>
         <div class="row align-items-center justify-content-center vh-100">
             <div class="col">
@@ -16,16 +17,5 @@
         </div>
     </div>
 
-    <style>
-        .link {
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid gray;
-            padding: 10px;
-            margin: 10px 0;
-            color: white !important;
-            background: #055160;
-        }
-    </style>
+    <style>{{ settings['style'] }}</style>
 {% endblock %}

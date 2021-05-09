@@ -25,11 +25,14 @@ class HomeController extends AbstractController
 
         $links = $user->getLinks();
 
+        $settings = $user->getSettings()->getItem();
+
         return $this->render(
             'home/index.html.twig',
             [
                 'username' => $username,
                 'links' => $links->toArray(),
+                'settings' => $settings,
             ]
         );
     }

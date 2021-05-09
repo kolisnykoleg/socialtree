@@ -42,6 +42,11 @@ class User implements UserInterface
      */
     private $links;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Settings::class, cascade={"persist", "remove"})
+     */
+    private $settings;
+
     public function __construct()
     {
         $this->links = new ArrayCollection();
@@ -149,6 +154,27 @@ class User implements UserInterface
                 $link->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSettings(): ?Settings
+    {
+        if (!$this->settings) {
+            $this->settings = new Settings();
+            $this->settings->setItem(
+                [
+                    'style' => '',
+                    'icon_url' => '',
+                ]
+            );
+        }
+        return $this->settings;
+    }
+
+    public function setSettings(?Settings $settings): self
+    {
+        $this->settings = $settings;
 
         return $this;
     }

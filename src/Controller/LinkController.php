@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Link;
+use App\Entity\Settings;
 use App\Entity\User;
 use App\Form\LinkType;
 use App\Repository\LinkRepository;
@@ -26,8 +27,8 @@ class LinkController extends AbstractController
         $user = $this->getUser();
 
         $username = $user->getUsername();
-        $links = $user->getLinks()->toArray();
 
+        $links = $user->getLinks()->toArray();
         $linksJson = $serializer->serialize(
             $links,
             'json',
@@ -36,11 +37,14 @@ class LinkController extends AbstractController
             ]
         );
 
+        $settings = $user->getSettings()->getItem();
+
         return $this->render(
             'link/index.html.twig',
             [
                 'username' => $username,
                 'links_json' => $linksJson,
+                'settings' => $settings,
             ]
         );
     }
@@ -66,33 +70,6 @@ class LinkController extends AbstractController
 
         return $this->render(
             'link/new.html.twig',
-            [
-                'link' => $link,
-                'form' => $form->createView(),
-            ]
-        );
-    }
-
-    /**
-     * @Route("/{id}/edit", name="link_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Link $link): Response
-    {
-        if (!$this->checkUser($link)) {
-            return new Response('Forbidden', Response::HTTP_FORBIDDEN);
-        }
-
-        $form = $this->createForm(LinkType::class, $link);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('link_index');
-        }
-
-        return $this->render(
-            'link/edit.html.twig',
             [
                 'link' => $link,
                 'form' => $form->createView(),
