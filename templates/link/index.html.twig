@@ -3,7 +3,7 @@
 {% block title %}Link index{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container" id="app">
         <div class="row my-3">
             <div class="col">
                 <a class="btn btn-outline-primary" href="/@{{ username }}">@{{ username }}</a>
@@ -12,35 +12,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1>Links</h1>
-
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Url</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for link in links %}
-                        <tr>
-                            <td>{{ link.id }}</td>
-                            <td>{{ link.title }}</td>
-                            <td>{{ link.url }}</td>
-                            <td>
-                                <a href="{{ path('link_edit', {'id': link.id}) }}">edit</a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
+                <links-list v-bind:init-links="{{ links_json }}"></links-list>
                 <a href="{{ path('link_new') }}">Create new</a>
             </div>
         </div>

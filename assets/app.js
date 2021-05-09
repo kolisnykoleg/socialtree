@@ -10,3 +10,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/app.scss'
 
 import 'bootstrap'
+import Vue from 'vue'
+
+import LinksList from './components/LinksList'
+
+new Vue({
+  el: '#app',
+  components: {
+    LinksList,
+  },
+})

@@ -38,6 +38,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Link::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $links;
 

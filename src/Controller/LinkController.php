@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/link")
@@ -19,18 +21,26 @@ class LinkController extends AbstractController
     /**
      * @Route("/", name="link_index", methods={"GET"})
      */
-    public function index(LinkRepository $linkRepository): Response
+    public function index(LinkRepository $linkRepository, SerializerInterface $serializer): Response
     {
         $user = $this->getUser();
 
         $username = $user->getUsername();
-        $links = $user->getLinks();
+        $links = $user->getLinks()->toArray();
+
+        $linksJson = $serializer->serialize(
+            $links,
+            'json',
+            [
+                AbstractNormalizer::IGNORED_ATTRIBUTES => ['user']
+            ]
+        );
 
         return $this->render(
             'link/index.html.twig',
             [
                 'username' => $username,
-                'links' => $links,
+                'links_json' => $linksJson,
             ]
         );
     }
@@ -41,7 +51,7 @@ class LinkController extends AbstractController
     public function new(Request $request): Response
     {
         $link = new Link();
-        $link->setPosition(0);
+        $link->setPosition(-1);
         $link->setUser($this->getUser());
         $form = $this->createForm(LinkType::class, $link);
         $form->handleRequest($request);
@@ -99,13 +109,32 @@ class LinkController extends AbstractController
             return new Response('Forbidden', 403);
         }
 
-        if ($this->isCsrfTokenValid('delete' . $link->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($link);
-            $entityManager->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($link);
+        $entityManager->flush();
+
+        return new Response('');
+    }
+
+    /**
+     * @Route("/{id}/update", name="link_update", methods={"POST"})
+     */
+    public function update(Request $request, Link $link): Response
+    {
+        if (!$this->checkUser($link)) {
+            return new Response('Forbidden', 403);
         }
 
-        return $this->redirectToRoute('link_index');
+        $data = $request->toArray();
+        $link->setTitle($data['title']);
+        $link->setUrl($data['url']);
+        $link->setPosition($data['position']);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($link);
+        $entityManager->flush();
+
+        return new Response('');
     }
 
     private function checkUser(Link $link): bool
