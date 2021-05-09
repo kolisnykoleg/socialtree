@@ -12,11 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/@{username}", name="home")
+     * @Route("/", name="home")
      */
     public function index(Request $request, UserRepository $userRepository): Response
     {
-        $username = $request->get('username');
+        $host = $request->getHost();
+        $username = explode('.', $host)[1];
+
         $user = $userRepository->findOneBy(['username' => $username]);
 
         if (!$user) {

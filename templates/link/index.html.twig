@@ -6,7 +6,7 @@
     <div class="container" id="app">
         <div class="row my-3">
             <div class="col">
-                <a class="btn btn-outline-primary" href="/@{{ username }}">@{{ username }}</a>
+                <a class="btn btn-outline-primary" href="{{ path('home') }}">{{ username }}</a>
                 <a class="btn btn-primary float-end" href="{{ path('logout') }}">Logout</a>
             </div>
         </div>
