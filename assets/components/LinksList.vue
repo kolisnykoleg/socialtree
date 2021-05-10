@@ -1,39 +1,39 @@
 <template>
   <draggable
     v-model="links"
-    tag="div"
+    tag="ul"
+    class="list-group"
     @end="dragEnd"
   >
     <template v-if="links.length">
-      <div
-        class="link"
+      <li
+        class="list-group-item py-3"
         v-for="(link, index) of links"
       >
-        <div class="d-inline-block">
-          <input
-            v-model="link.title"
-            @input="changeLink(index)"
-            type="text"
-            name="title"
-            placeholder="Title"
-          >
-          <input
-            v-model="link.url"
-            @input="changeLink(index)"
-            type="text"
-            name="url"
-            placeholder="Url"
-          >
-        </div>
+        <input
+          v-model="link.title"
+          @input="changeLink(index)"
+          type="text"
+          name="title"
+          class="form-control mb-2"
+          placeholder="Title"
+        >
+        <input
+          v-model="link.url"
+          @input="changeLink(index)"
+          type="text"
+          name="url"
+          class="form-control mb-2"
+          placeholder="Url"
+        >
         <button
-          class="btn btn-sm btn-danger"
+          class="btn btn-sm btn-danger d-block ms-auto"
           @click="deleteLink(index)"
         >
           Delete
         </button>
-      </div>
+      </li>
     </template>
-    <p v-else class="text-center">No links found</p>
   </draggable>
 </template>
 
@@ -85,14 +85,7 @@ export default {
 </script>
 
 <style scoped>
-input {
-  background: inherit;
-  color: inherit;
-  border: none;
-  outline: none;
-}
-
-.link {
+.list-group-item {
   cursor: move;
 }
 </style>
