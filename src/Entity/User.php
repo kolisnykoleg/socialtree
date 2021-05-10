@@ -166,6 +166,7 @@ class User implements UserInterface
                 [
                     'style' => '',
                     'icon_url' => '',
+                    'title' => '',
                 ]
             );
         }

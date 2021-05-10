@@ -13,13 +13,22 @@
       ></textarea>
     </div>
     <div class="col-6">
-      <label for="icon_url" class="form-label">Icon url</label>
+      <label for="icon_url" class="form-label">Logo url</label>
       <input
-        class="form-control"
+        class="form-control mb-3"
         type="text"
         name="icon_url"
         id="icon_url"
         v-model="settings.icon_url"
+        @input="updateSettings"
+      >
+      <label for="title" class="form-label">Title</label>
+      <input
+        class="form-control"
+        type="text"
+        name="title"
+        id="title"
+        v-model="settings.title"
         @input="updateSettings"
       >
     </div>
