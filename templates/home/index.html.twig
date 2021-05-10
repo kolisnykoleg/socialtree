@@ -4,16 +4,14 @@
 
 {% block body %}
     <div class="container">
-        <div class="d-flex align-items-center mt-3">
-            <img class="icon" src="{{ settings['icon_url'] }}" alt="">
-            <h2 class="d-inline-block m-0">{{ username }}</h2>
+        <div class="header">
+            <img class="logo" src="{{ settings['icon_url'] }}" alt="">
+            <span class="title">{{ username }}</span>
         </div>
-        <div class="row align-items-center justify-content-center vh-100">
-            <div class="col">
-                {% for link in links %}
-                    <a href="{{ link.url }}" target="_blank" class="link">{{ link.title }}</a>
-                {% endfor %}
-            </div>
+        <div class="list">
+            {% for link in links %}
+                <a href="{{ link.url }}" target="_blank" class="link">{{ link.title }}</a>
+            {% endfor %}
         </div>
     </div>
 
