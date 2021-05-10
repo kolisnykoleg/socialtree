@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     public function index(Request $request, UserRepository $userRepository): Response
     {
         $host = $request->getHost();
-        $username = explode('.', $host)[1];
+        $username = $host;
 
         $user = $userRepository->findOneBy(['username' => $username]);
 
